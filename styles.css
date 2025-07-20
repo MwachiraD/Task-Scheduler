@@ -181,9 +181,3 @@ canvas {
   max-width: 400px;
   height: auto;
 }
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #121212;
-    color: #f1f1f1;
-  }
-}
