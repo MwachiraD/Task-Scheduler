@@ -1,0 +1,178 @@
+body {
+  font-family: sans-serif;
+  background-color: #111;
+  color: #fff;
+  margin: 0;
+  padding: 1rem;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+form select, form input, form button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+}
+
+form select, form input {
+  background: #222;
+  color: #fff;
+}
+
+form button {
+  background: #4caf50;
+  color: #fff;
+  cursor: pointer;
+}
+
+.logs ul, #dayLogEntries {
+  list-style: none;
+  padding-left: 0;
+}
+
+.logs li, #dayLogEntries li {
+  margin: 0.25rem 0;
+  padding: 0.5rem;
+  background: #222;
+  border-radius: 4px;
+}
+
+.summary {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+canvas {
+  max-width: 300px;
+  margin: 1rem auto;
+  display: block;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.calendar-day {
+  background: #222;
+  padding: 0.5rem;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.calendar-day:hover {
+  background: #333;
+}
+
+.date {
+  font-weight: bold;
+  display: block;
+}
+
+.emoji-icons {
+  font-size: 1.2rem;
+}
+
+.log-view {
+  display: none;
+  background: #222;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+button#exportBtn {
+  background: #2196f3;
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: block;
+  margin: 1rem auto;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.project-card {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: var(--card-bg, #fff);
+}
+
+.project-card h3 {
+  margin-top: 0;
+}
+
+.project-card textarea {
+  width: 100%;
+  min-height: 60px;
+  margin-top: 0.5em;
+  resize: vertical;
+}
+#projectTracker {
+  margin: 2em 0;
+  padding: 1em;
+  background: var(--dark-bg, #1e1e1e); /* match your dark theme */
+  color: var(--text-color, #f0f0f0);    /* text should be light */
+  border-radius: 8px;
+}
+
+.project-card {
+  background: var(--card-dark, #2a2a2a);  /* darker card background */
+  color: inherit;
+  border: 1px solid #444;
+}
+
+.project-card textarea {
+  background: #1a1a1a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+
+.project-card input[type="range"] {
+  width: 100%;
+}
+:root {
+  --dark-bg: #1e1e1e;
+  --text-color: #f0f0f0;
+  --card-dark: #2a2a2a;
+}
+.tracker-section {
+  margin: 1rem;
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.tracker-section h2 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+#substanceChart {
+  max-width: 100%;
+  height: auto;
+}
+
+.save-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+}

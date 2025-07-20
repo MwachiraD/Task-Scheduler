@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Activity Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+  <main>
+    <h1>📅 Activity Tracker</h1>
+
+   <form id="activityForm">
+  <label for="category">Activity:</label>
+  <select name="category" id="category">
+    <option value="">--Choose--</option>
+    <option value="coding">💻 Coding</option>
+    <option value="writing">✍️ Writing</option>
+    <option value="lifting">🏋️‍♂️ Weightlifting</option>
+    <option value="finance">💰 Finance</option>
+    <option value="drugs">💊 Drugs</option>
+    <option value="travel">✈️ Travel</option>
+    <option value="projects">📂 Projects</option>
+    <option value="misc">📝 Misc</option>
+  </select>
+
+  <input type="text" name="input" id="input" placeholder="Details (optional for lifting)" />
+
+  <!-- Dynamic custom inputs here -->
+  <div id="customFields"></div>
+
+  <button type="submit">Add</button>
+</form>
+
+    <!-- ===== Quick Log Section ===== -->
+    <section class="logs">
+      <h2>📝 Recent Logs</h2>
+      <ul id="logsList"></ul>
+    </section>
+
+    <!-- ===== Summaries ===== -->
+    <section class="summary">
+      <p id="weeklySummary">Weekly summary</p>
+      <p id="monthlySummary">Monthly summary</p>
+      <canvas id="financeChart"></canvas>
+    </section>
+<h3>💰 Finance Summary</h3>
+<div id="financeSummary">
+  <canvas id="financeChart" width="300" height="300"></canvas>
+</div>
+<section class="tracker-section">
+  <h2>📊 Substance Use Tracker</h2>
+  <canvas id="substanceChart"></canvas>
+</section>
+
+
+<section id="projectTracker">
+  <h2>📂 Project Tracker</h2>
+  <div class="project-list">
+    <div class="project-card" id="projectScamSentry">
+      <h3>🕵️ Scam Sentry</h3>
+      
+      <label>Progress: <input type="range" min="0" max="100" value="0" id="progressScam"></label>
+      <textarea id="noteScam" placeholder="Notes on progress..."></textarea>
+      <small id="timeScam"></small>
+      <button onclick="saveProjectProgress('Scam')">Save Scam</button>
+    </div>
+
+    <div class="project-card" id="projectScentNet">
+      <h3>🌐 ScentNet</h3>
+      
+      <label>Progress: <input type="range" min="0" max="100" value="0" id="progressScent"></label>
+      <textarea id="noteScent" placeholder="Notes on progress..."></textarea>
+      <small id="timeScent"></small>
+     <button onclick="saveProjectProgress('Scent')">Save Scent</button>
+    </div>
+
+    <div class="project-card" id="projectPegasus">
+      <h3>🚀 Pegasus</h3>
+      
+      <label>Progress: <input type="range" min="0" max="100" value="0" id="progressPega"></label>
+      <textarea id="notePega" placeholder="Notes on progress..."></textarea>
+      <small id="timePega"></small>
+      <button onclick="saveProjectProgress('Pega')">Save Pega</button>
+    </div>
+
+    <div class="project-card" id="projectOther">
+      <h3>➕ Other Projects</h3>
+      
+      <label>Progress: <input type="range" min="0" max="100" value="0" id="progressOther"></label>
+      <textarea id="noteOther" placeholder="Notes on progress..."></textarea>
+      <small id="timeOther"></small>
+      <button onclick="saveProjectProgress('Other')">Save Other</button>
+    </div>
+
+    <button id="saveProjects">💾 Save Project Progress</button>
+  </div>
+</section>
+<canvas id="projectChart" width="300" height="200"></canvas>
+<button id="exportProjectsCSV">📤 Export Project Data to CSV</button>
+
+    <!-- ===== Calendar View ===== -->
+    <section>
+      <h2>📆 Calendar</h2>
+      <div id="calendarGrid" class="calendar"></div>
+    </section>
+
+    <!-- ===== Daily Log View ===== -->
+    <section id="dayLogView" class="log-view">
+      <h3 id="logDateDisplay">Log for: </h3>
+      <ul id="dayLogEntries"></ul>
+    </section>
+
+    <!-- ===== Export Button ===== -->
+    <button id="exportBtn">Export to CSV</button>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    const categorySelect = document.getElementById("category");
+const inputField = document.getElementById("input");
+const customFields = document.getElementById("customFields");
+
+// Handle category change
+categorySelect.addEventListener("change", () => {
+  const selected = categorySelect.value;
+  customFields.innerHTML = ""; // Clear old fields
+  inputField.style.display = "block"; // default show
+
+  if (selected === "finance") {
+    inputField.style.display = "none"; // hide default input
+
+    customFields.innerHTML = `
+      <label>Received From:</label>
+      <input type="text" id="financeReceivedFrom" placeholder="e.g. Client A"><br>
+      <label>Amount Received:</label>
+      <input type="number" id="financeAmountReceived" placeholder="e.g. 500"><br>
+      <label>Spent On:</label>
+      <input type="text" id="financeSpentOn" placeholder="e.g. Hosting Fees"><br>
+      <label>Amount Spent:</label>
+      <input type="number" id="financeAmountSpent" placeholder="e.g. 200"><br>
+    `;
+  }
+
+  if (selected === "projects") {
+    inputField.style.display = "none";
+
+    customFields.innerHTML = `
+      <label>Scam Sentry Notes:</label>
+      <input type="text" id="scamSentryNote" placeholder="e.g. Added login page"><br>
+      <label>ScentNet Notes:</label>
+      <input type="text" id="scentNetNote" placeholder="e.g. Model trained"><br>
+      <label>Pegasus Notes:</label>
+      <input type="text" id="pegasusNote" placeholder="e.g. Built dashboard"><br>
+      <label>Other Project Notes:</label>
+      <input type="text" id="otherProjectNote" placeholder="e.g. Misc tools"><br>
+    `;
+  }
+
+  if (selected === "lifting") {
+    inputField.style.display = "none"; // No input needed
+  }
+  if (selected === "drugs") {
+  inputField.style.display = "none";
+
+  customFields.innerHTML = `
+    <label>Drug Type:</label>
+    <select id="drugType">
+      <option value="">--Choose--</option>
+      <option value="Weed">Weed</option>
+      <option value="Alcohol">Alcohol</option>
+      <option value="Medication">Medication</option>
+    </select><br>
+    <label>Note:</label>
+    <input type="text" id="drugNote" placeholder="e.g. Two blunts, 3 beers, etc."><br>
+  `;
+}
+
+
+});
+
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>
